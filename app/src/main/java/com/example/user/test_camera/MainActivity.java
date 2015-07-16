@@ -120,6 +120,7 @@ public ImageButton myImage;
         @Override
         protected void onProgressUpdate(Bitmap... values) {
             super.onProgressUpdate(values);
+
             myImage.setImageBitmap(values[0]);
         }
 
@@ -163,7 +164,8 @@ public ImageButton myImage;
                     Bitmap bmp = BitmapFactory.decodeByteArray(params[0],0,params[0].length);
                     Bitmap correctBmp = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), mat, true);
 
-                    publishProgress(correctBmp);
+
+                    publishProgress(BitmapEditor.BlurScaled(correctBmp, 5));
                     // bmp.recycle();
 
                     File file = new File(path);
