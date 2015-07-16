@@ -6,27 +6,28 @@
 
     <FrameLayout android:id="@+id/preview"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.78">
+        android:layout_height="fill_parent"
+        android:layout_weight="3">
     </FrameLayout>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.5"
-        android:weightSum="1">
+        >
 
-        <ImageView
+        <ImageButton
         android:layout_width="200dp"
         android:layout_height="match_parent"
         android:id="@+id/imageview"
-        android:layout_gravity="bottom|left"></ImageView>
+        android:layout_gravity="bottom|left"
+          ></ImageButton>
 
         <ImageButton android:layout_width="68dp"
             android:layout_height="68dp" android:id="@+id/buttonClick"
             android:text="Click"
-            android:background="@drawable/camerabutton"></ImageButton>
+            android:background="@drawable/camerabutton"
+            ></ImageButton>
 
     </LinearLayout>
 </LinearLayout>

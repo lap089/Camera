@@ -74,7 +74,7 @@ class Preview extends SurfaceView implements SurfaceHolder.Callback {
             camera.setPreviewCallback(new PreviewCallback() {
 
                 public void onPreviewFrame(byte[] data, Camera arg1) {
-                    FileOutputStream outStream = null;
+             /*       FileOutputStream outStream = null;
                     try {
                         outStream = new FileOutputStream(String.format(
                                 "/sdcard/Download/temp.jpg", System.currentTimeMillis()));
@@ -88,7 +88,7 @@ class Preview extends SurfaceView implements SurfaceHolder.Callback {
                         e.printStackTrace();
                     } finally {
                     }
-                    Preview.this.invalidate();
+              */      Preview.this.invalidate();
                 }
             });
         } catch (IOException e) {
@@ -152,7 +152,7 @@ class Preview extends SurfaceView implements SurfaceHolder.Callback {
     }
 
 
-
+//N6KXJ-P6YWY-4C92Q-J7BVB-R6XGM
 
     public static int setCameraDisplayOrientation(Activity activity,
                                                    int cameraId, android.hardware.Camera camera) {

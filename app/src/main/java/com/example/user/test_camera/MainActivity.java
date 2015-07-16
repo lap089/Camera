@@ -6,8 +6,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -15,6 +17,7 @@ import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 import android.hardware.Camera.ShutterCallback;
 import android.media.ExifInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -24,6 +27,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
     private static final String TAG = "MainActivity";
@@ -32,7 +36,7 @@ public class MainActivity extends Activity {
     ImageButton buttonClick;
     Camera camera;
 public String path;
-public ImageView myImage;
+public ImageButton myImage;
     public static int currentId;
 
     /** Called when the activity is first created. */
@@ -43,8 +47,9 @@ public ImageView myImage;
         camera = getCameraInstance();
         preview = new Preview(this,camera);
         ((FrameLayout) findViewById(R.id.preview)).addView(preview);
-         myImage = (ImageView) findViewById(R.id.imageview);
+         myImage = (ImageButton) findViewById(R.id.imageview);
         buttonClick = (ImageButton) findViewById(R.id.buttonClick);
+
         buttonClick.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
 
@@ -58,6 +63,19 @@ public ImageView myImage;
 
             }
         });
+
+
+
+        myImage.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+
+                Intent intent = new Intent(MainActivity.this,ImageEditorActivity.class);
+                intent.putExtra("PathImage",path);
+                startActivity(intent);
+            }
+        });
+
 
         Log.i(TAG, "onCreate'd");
     }
@@ -79,7 +97,35 @@ public ImageView myImage;
     PictureCallback jpegCallback = new PictureCallback() {
         public void onPictureTaken(byte[] data, Camera camera) {
 
-            Log.d(TAG,"Saving file...");
+            Log.d(TAG, "Saving file...");
+
+
+                  createFile createfile = new createFile();
+                    createfile.execute(data);
+
+
+        }
+
+    };
+
+
+    private class createFile extends AsyncTask<byte[],Bitmap,Bitmap>
+    {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected void onProgressUpdate(Bitmap... values) {
+            super.onProgressUpdate(values);
+            myImage.setImageBitmap(values[0]);
+        }
+
+        @Override
+        protected Bitmap doInBackground(byte[]... params) {
+
             FileOutputStream outStream = null;
             try {
                 // write to local sandbox file system
@@ -88,13 +134,13 @@ public ImageView myImage;
                 // System.currentTimeMillis()), 0);
                 // Or write to sdcard
                 path = String.format("/sdcard/Download/%d_lap.jpg", System.currentTimeMillis());
-                outStream = new FileOutputStream(path);
-                outStream.write(data);
-                outStream.close();
+             //   outStream = new FileOutputStream(path);
+             //   outStream.write(params[0]);
+             //   outStream.close();
 
                 try {
-                    File f = new File(path);
-                    ExifInterface exif = new ExifInterface(f.getPath());
+             //       File f = new File(path);
+                  /*  ExifInterface exif = new ExifInterface(f.getPath());
                     int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
 
                     int angle = 0;
@@ -107,23 +153,29 @@ public ImageView myImage;
                     }
                     else if (orientation == ExifInterface.ORIENTATION_ROTATE_270) {
                         angle = 270;
-                    }
+                    }*/
 
+                    camera.startPreview();
                     Matrix mat = new Matrix();
                     mat.postRotate(Preview.rotation);
 
-                    Bitmap bmp = BitmapFactory.decodeStream(new FileInputStream(f), null, null);
+                /// /    Bitmap bmp = BitmapFactory.decodeStream(new FileInputStream(f), null, null);
+                    Bitmap bmp = BitmapFactory.decodeByteArray(params[0],0,params[0].length);
                     Bitmap correctBmp = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), mat, true);
 
-                    myImage.setImageBitmap(correctBmp);
-                   // bmp.recycle();
+                    publishProgress(correctBmp);
+                    // bmp.recycle();
 
-                   File file = new File(path);
+                    File file = new File(path);
                     FileOutputStream fOut = new FileOutputStream(file);
 
                     correctBmp.compress(Bitmap.CompressFormat.PNG, 85, fOut);
                     fOut.flush();
                     fOut.close();
+
+
+                    Log.i(TAG, "onPictureTaken - wrote bytes: " + params[0].length);
+                    return correctBmp;
                 }
                 catch (IOException e) {
                     Log.w("TAG", "-- Error in setting image");
@@ -137,21 +189,27 @@ public ImageView myImage;
 
 
 
-              //  SetImage();
-                Log.d(TAG, "onPictureTaken - wrote bytes: " + data.length);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+                //  SetImage();
+
+         //   } catch (FileNotFoundException e) {
+         //       e.printStackTrace();
+         //   } catch (IOException e) {
+         //       e.printStackTrace();
             } finally {
             }
-            Log.d(TAG, "onPictureTaken - jpeg");
-
-            camera.startPreview();
-
+         return null;
         }
 
-    };
+        @Override
+        protected void onPostExecute(Bitmap result) {
+            super.onPostExecute(result);
+
+
+            Toast.makeText(MainActivity.this,"Done!!!",Toast.LENGTH_SHORT);
+        }
+    }
+
+
 
     public void SetImage()
     {
@@ -195,7 +253,7 @@ public ImageView myImage;
                 for (int i = 0; i < numberOfCameras; i++) {
                     Camera.CameraInfo info = new Camera.CameraInfo();
                     Camera.getCameraInfo(i, info);
-                    if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+                    if (info.facing == Camera.CameraInfo.CAMERA_FACING_BACK) {
                         //Log.d(DEBUG_TAG, "Camera found");
                         currentId = i;
                         break;
@@ -212,4 +270,9 @@ public ImageView myImage;
 
         return c; // returns null if camera is unavailable
     }
+
+
+
+
+
 }
