@@ -134,7 +134,8 @@ public ImageButton myImage;
                 // CameraDemo.this.openFileOutput(String.format("%d.jpg",
                 // System.currentTimeMillis()), 0);
                 // Or write to sdcard
-                path = String.format("/sdcard/Download/%d_lap.jpg", System.currentTimeMillis());
+                path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)+"/"+ String.format("%d_lap.jpg", System.currentTimeMillis());
+
              //   outStream = new FileOutputStream(path);
              //   outStream.write(params[0]);
              //   outStream.close();
