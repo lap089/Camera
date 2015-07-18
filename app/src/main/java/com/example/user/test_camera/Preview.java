@@ -115,6 +115,7 @@ class Preview extends SurfaceView implements SurfaceHolder.Callback {
             mHolder.removeCallback(this);
             camera.release();
             camera = null;
+            MainActivity.camera = null;
         }
       //camera.stopPreview();
 

@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.Point;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 import android.hardware.Camera.ShutterCallback;
@@ -21,6 +22,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -31,10 +33,10 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
     private static final String TAG = "MainActivity";
-
+    public Point size;
     Preview preview;
     ImageButton buttonClick;
-    Camera camera;
+   public static Camera camera;
 public String path;
 public ImageButton myImage;
     public static int currentId;
@@ -49,6 +51,13 @@ public ImageButton myImage;
         ((FrameLayout) findViewById(R.id.preview)).addView(preview);
          myImage = (ImageButton) findViewById(R.id.imageview);
         buttonClick = (ImageButton) findViewById(R.id.buttonClick);
+
+
+        Display display = getWindowManager().getDefaultDisplay();
+        size = new Point();
+        display.getSize(size);
+        Log.d(TAG,"Screen size: " + size.x + "-" + size.y);
+
 
         buttonClick.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
@@ -97,8 +106,7 @@ public ImageButton myImage;
     PictureCallback jpegCallback = new PictureCallback() {
         public void onPictureTaken(byte[] data, Camera camera) {
 
-            Log.d(TAG, "Saving file...");
-
+            Log.d(TAG, "Saving file..." + data.length);
 
                   createFile createfile = new createFile();
                     createfile.execute(data);
@@ -120,7 +128,14 @@ public ImageButton myImage;
         @Override
         protected void onProgressUpdate(Bitmap... values) {
             super.onProgressUpdate(values);
-
+            Log.d(TAG, values[0].getWidth() + "-" + values[0].getHeight());
+        //    int nh = (int) ( values[0].getHeight() * (512.0 / values[0].getWidth()) );
+         //   Bitmap scaled = Bitmap.createScaledBitmap(values[0], 512, nh, true);
+           // if(size.x < values[0].getWidth() && size.y < values[0].getHeight())
+           // {
+                Bitmap scaled = Bitmap.createScaledBitmap(values[0],size.x/4, size.y/4, true);
+                values[0] = scaled;
+           // }
             myImage.setImageBitmap(values[0]);
         }
 
@@ -166,13 +181,13 @@ public ImageButton myImage;
                     Bitmap correctBmp = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), mat, true);
 
 
-                    publishProgress(BitmapEditor.BlurScaled(correctBmp, 5));
+                    publishProgress(correctBmp);
                     // bmp.recycle();
 
                     File file = new File(path);
                     FileOutputStream fOut = new FileOutputStream(file);
 
-                    correctBmp.compress(Bitmap.CompressFormat.PNG, 85, fOut);
+                    correctBmp.compress(Bitmap.CompressFormat.JPEG, 85, fOut);
                     fOut.flush();
                     fOut.close();
 
@@ -213,28 +228,26 @@ public ImageButton myImage;
     }
 
 
-
-    public void SetImage()
+    @Override
+    public void onResume()
     {
-        File imgFile = new  File(path);
+        super.onResume();
 
-        if(imgFile.exists()){
+        if(camera == null) {
+            camera = getCameraInstance();
+            preview = new Preview(this,camera);
+            ((FrameLayout) findViewById(R.id.preview)).addView(preview);
 
-            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-            myImage.setImageBitmap(myBitmap);
-          /*  Matrix matrix = new Matrix();
-            myImage.setScaleType(ImageView.ScaleType.MATRIX);   //required
-            matrix.postRotate( Preview.rotation,myImage.getDrawable().getBounds().width()/2, myImage.getDrawable().getBounds().height()/2);
-            myImage.setImageMatrix(matrix);
-    */    }
+            Log.i(TAG, "onResume");
 
+        }
     }
+
 
 
     @Override
     public void onPause() {
         super.onPause();  // Always call the superclass method first
-
         // Release the Camera because we don't need it when paused
         // and other activities might need to use it.
        /* if (camera != null) {

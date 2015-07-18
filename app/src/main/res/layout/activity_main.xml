@@ -10,28 +10,31 @@
         android:layout_weight="5">
     </FrameLayout>
 
-    <LinearLayout
-        android:orientation="horizontal"
+
+
+    <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_gravity="bottom|center_horizontal"
         >
 
-
-
-        <ImageButton android:layout_width="68dp"
-            android:layout_gravity="center_vertical|center_horizontal"
-            android:layout_height="68dp" android:id="@+id/buttonClick"
-            android:background="@drawable/camerabutton"
-            />
-
         <ImageButton
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/imageview"
             android:scaleType="centerInside"
             />
 
-    </LinearLayout>
+        <ImageButton android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonClick"
+            android:background="@drawable/camerabutton"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+
+
+
 </LinearLayout>

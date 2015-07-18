@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,13 +42,27 @@ public class ImageEditorActivity extends Activity {
         imageview = (ImageView) findViewById(R.id.imageview);
         Blurbutton = (ImageButton) findViewById(R.id.blur);
         Minorbutton = (ImageButton) findViewById(R.id.minor);
-        path = getIntent().getExtras().getString("PathImage",null);
+        path = getIntent().getExtras().getString("PathImage", null);
 
         File imgFile = new File(path);
 
-        bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-        imageview.setImageBitmap(bitmap);
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
 
+        bitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+        if(bitmap!=null) {
+       //     int nh = (int) (bitmap.getHeight() * (512.0 / bitmap.getWidth()));
+       //     Bitmap scaled = Bitmap.createScaledBitmap(bitmap, 512, nh, true);
+       //     bitmap = scaled;
+      //      if(size.x < bitmap.getWidth() && size.y < bitmap.getHeight())
+        //    {
+                double scale = (double) size.x/bitmap.getWidth();
+                Bitmap scaled = Bitmap.createScaledBitmap(bitmap,size.x/2 , size.y/2, true);
+                bitmap = scaled;
+          //  }
+            imageview.setImageBitmap(bitmap);
+        }
            Blurbutton.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View arg0) {
@@ -119,7 +135,7 @@ public class ImageEditorActivity extends Activity {
                 bitmap.compress(Bitmap.CompressFormat.JPEG,100,os1);
                 return bitmap;
             }
-            catch (Exception e){e.printStackTrace();};
+            catch (Exception e){e.printStackTrace();}
 
             return null;
 
