@@ -10,8 +10,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/imageview"
+<<<<<<< HEAD
+        android:background="@drawable/camera1"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/minor"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+=======
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
+>>>>>>> 6969cf0a748f5d3fe187bf01a4911a3dd29e429f
 
     <ImageButton
         android:layout_width="wrap_content"
@@ -30,5 +38,17 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
+<<<<<<< HEAD
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ORC"
+        android:id="@+id/orc"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/imageview"
+        android:layout_toStartOf="@+id/imageview" />
+
+=======
+>>>>>>> 6969cf0a748f5d3fe187bf01a4911a3dd29e429f
 
 </RelativeLayout>

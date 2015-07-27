@@ -2,6 +2,10 @@ package com.example.user.test_camera;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+<<<<<<< HEAD
+import android.content.Intent;
+=======
+>>>>>>> 6969cf0a748f5d3fe187bf01a4911a3dd29e429f
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
@@ -13,6 +17,10 @@ import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+<<<<<<< HEAD
+import android.widget.Button;
+=======
+>>>>>>> 6969cf0a748f5d3fe187bf01a4911a3dd29e429f
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -30,6 +38,10 @@ public class ImageEditorActivity extends Activity {
 
     private ImageView imageview;
     private ImageButton Blurbutton;
+<<<<<<< HEAD
+    private Button orc;
+=======
+>>>>>>> 6969cf0a748f5d3fe187bf01a4911a3dd29e429f
     private ImageButton Minorbutton;
     private String path;
     private Bitmap bitmap;
@@ -42,6 +54,10 @@ public class ImageEditorActivity extends Activity {
         imageview = (ImageView) findViewById(R.id.imageview);
         Blurbutton = (ImageButton) findViewById(R.id.blur);
         Minorbutton = (ImageButton) findViewById(R.id.minor);
+<<<<<<< HEAD
+        orc = (Button) findViewById(R.id.orc);
+=======
+>>>>>>> 6969cf0a748f5d3fe187bf01a4911a3dd29e429f
         path = getIntent().getExtras().getString("PathImage", null);
 
         File imgFile = new File(path);
@@ -76,7 +92,17 @@ public class ImageEditorActivity extends Activity {
             }
         });
 
+<<<<<<< HEAD
+        orc.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View arg0) {
+                Intent intent = new Intent(ImageEditorActivity.this, OrcActivity.class);
+                intent.putExtra("Path",path);
+                startActivity(intent);
+            }
+        });
+=======
 
+>>>>>>> 6969cf0a748f5d3fe187bf01a4911a3dd29e429f
 
     }
 

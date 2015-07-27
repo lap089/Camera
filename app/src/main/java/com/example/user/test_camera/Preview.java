@@ -9,6 +9,10 @@ package com.example.user.test_camera;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+<<<<<<< HEAD
+import java.security.Policy;
+=======
+>>>>>>> 6969cf0a748f5d3fe187bf01a4911a3dd29e429f
 import java.util.List;
 
 import android.app.Activity;
@@ -27,7 +31,11 @@ import android.view.SurfaceView;
 class Preview extends SurfaceView implements SurfaceHolder.Callback {
     private static final String TAG = "Preview";
 
+<<<<<<< HEAD
+    public static SurfaceHolder mHolder;
+=======
     SurfaceHolder mHolder;
+>>>>>>> 6969cf0a748f5d3fe187bf01a4911a3dd29e429f
     public Context context;
     public static Camera camera;
     public static int rotation;
@@ -108,6 +116,16 @@ class Preview extends SurfaceView implements SurfaceHolder.Callback {
         // Surface will be destroyed when we return, so stop the preview.
         // Because the CameraDevice object is not a shared resource, it's very
         // important to release it when the activity is paused.
+<<<<<<< HEAD
+        if(camera != null) {
+          camera.setPreviewCallback(null);
+          camera.stopPreview();
+          mHolder.removeCallback(this);
+          camera.release();
+          camera = null;
+          MainActivity.camera = null;
+      }
+=======
 
         if(camera != null) {
             camera.setPreviewCallback(null);
@@ -117,16 +135,25 @@ class Preview extends SurfaceView implements SurfaceHolder.Callback {
             camera = null;
             MainActivity.camera = null;
         }
+>>>>>>> 6969cf0a748f5d3fe187bf01a4911a3dd29e429f
       //camera.stopPreview();
 
 
       Log.i(TAG,"SurfaceDestroy");
     }
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 6969cf0a748f5d3fe187bf01a4911a3dd29e429f
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int w, int h) {
         // Now that the size is known, set up the camera parameters and begin
         Camera.Parameters parameters = camera.getParameters();
+<<<<<<< HEAD
+      //  parameters.setFlashMode(parameters.FLASH_MODE_ON);
+=======
+>>>>>>> 6969cf0a748f5d3fe187bf01a4911a3dd29e429f
         List<Camera.Size> previewSizes = parameters.getSupportedPreviewSizes();
 
         Log.i(TAG,"SurfaceChange");

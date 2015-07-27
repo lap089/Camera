@@ -20,6 +20,13 @@ android {
 }
 
 dependencies {
+<<<<<<< HEAD
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:appcompat-v7:22.2.0'
+    compile 'me.dm7.barcodescanner:zbar:1.8'
+    compile project(':libraries:tess-two')
+=======
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.2.0'
+>>>>>>> 6969cf0a748f5d3fe187bf01a4911a3dd29e429f
 }

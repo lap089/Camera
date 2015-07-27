@@ -19,11 +19,19 @@
         android:layout_gravity="bottom|center_horizontal"
         >
 
+<<<<<<< HEAD
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageview"
+
+=======
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/imageview"
             android:scaleType="centerInside"
+>>>>>>> 6969cf0a748f5d3fe187bf01a4911a3dd29e429f
             />
 
         <ImageButton android:layout_width="wrap_content"
@@ -33,6 +41,26 @@
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true" />
 
+<<<<<<< HEAD
+        <Button android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/qrcode"
+            android:text="QRCode"
+            android:layout_alignTop="@+id/exchange"
+            android:layout_toLeftOf="@+id/exchange"
+            android:layout_toStartOf="@+id/exchange" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/exchange"
+            android:background="@drawable/camera1"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+=======
+>>>>>>> 6969cf0a748f5d3fe187bf01a4911a3dd29e429f
     </RelativeLayout>
 
 

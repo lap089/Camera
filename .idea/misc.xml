@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+<<<<<<< HEAD
+=======
   <component name="EntryPointsManager">
     <entry_points version="2.0" />
   </component>
+>>>>>>> 6969cf0a748f5d3fe187bf01a4911a3dd29e429f
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>

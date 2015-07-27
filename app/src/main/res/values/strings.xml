@@ -4,4 +4,8 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_image_editor">ImageEditorActivity</string>
+<<<<<<< HEAD
+    <string name="title_activity_orc">OrcActivity</string>
+=======
+>>>>>>> 6969cf0a748f5d3fe187bf01a4911a3dd29e429f
 </resources>
